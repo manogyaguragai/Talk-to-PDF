@@ -116,14 +116,14 @@ def main():
     with st.sidebar:
         st.markdown("<h2 style='color: red;'>Instruction Menu</h1>", unsafe_allow_html=True)
 
-        st.markdown("<h4 style='color: white;'>1. Upload your PDF Files using the 'Browse Files' button.</h4>", unsafe_allow_html=True)
-        st.markdown("<h4 style='color: white;'>2. Click on the Submit Button</h4>", unsafe_allow_html=True)
-        st.markdown("<h4 style='color: white;'>3. Ask a Question related to your document and get an answer.</h4>", unsafe_allow_html=True)
-        st.markdown("<h4 style='color: white;'>It's just that easy!</h4>", unsafe_allow_html=True)
+        st.markdown("<h4 style='color: grey;'>1. Upload your PDF Files using the 'Browse Files' button.</h4>", unsafe_allow_html=True)
+        st.markdown("<h4 style='color: grey;'>2. Click on the Submit Button</h4>", unsafe_allow_html=True)
+        st.markdown("<h4 style='color: grey;'>3. Ask a Question related to your document and get an answer.</h4>", unsafe_allow_html=True)
+        st.markdown("<h4 style='color: grey;'>It's just that easy!</h4>", unsafe_allow_html=True)
 
         st.markdown("<h2 style='color: red;'>Points to Note</h1>", unsafe_allow_html=True)
-        st.markdown("<h4 style='color: white;'>1. It is recommended that you fact-check the answers provided by this model.</h4>", unsafe_allow_html=True)
-        st.markdown("<h4 style='color: white;'>2. The information may sometimes be incomplete due to limited output size.</h4>", unsafe_allow_html=True)
+        st.markdown("<h4 style='color: grey;'>1. It is recommended that you fact-check the answers provided by this model.</h4>", unsafe_allow_html=True)
+        st.markdown("<h4 style='color: grey;'>2. The information may sometimes be incomplete due to limited output size.</h4>", unsafe_allow_html=True)
 
     user_question = st.text_input("Ask a Question:")
 
