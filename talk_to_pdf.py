@@ -95,6 +95,7 @@ def user_input(user_question):
 # Main functio to tie it all up
 def main():  
     st.header("Chat with your PDF Document!")
+    st.markdown("<h5 style='color: grey;'>Works with PDF files only</h1>", unsafe_allow_html=True)
     with st.container():
         pdf_docs = st.file_uploader("", accept_multiple_files=True)
         
