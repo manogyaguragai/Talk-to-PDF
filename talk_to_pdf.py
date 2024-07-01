@@ -18,6 +18,8 @@ from langchain.chains.question_answering import load_qa_chain
 from langchain.prompts import PromptTemplate 
 load_dotenv()
 
+st.set_page_config(page_title = "Talk To PDF")
+
 genai.configure(api_key = os.getenv("GOOGLE_API_KEY"))
 
 # Function to iterate over all PDFs and return the extracted text from all pages 
@@ -54,6 +56,8 @@ def get_conversation_chain(retr):
     You are a capable AI model that answers the question as detailed and effectively as possible from the provided context.\n
     Your answer should be as close to the provided context as possible.\n
     Give as many results as specified by the user by focusing on quantifying words. If user does not specify, give a concise answer.\n
+    Be polite to user queries and respond properly to user greetings. \n
+    If the user asks to describe the file type, make sure to do it relevantly and descriptively.\n
     Make sure to provide all the details, if the answer is not in provided context just tell the user that you could not find the relevant answer in the given context, don't provide the wrong answer.\n\n
 
     Context: {context}\n
@@ -89,15 +93,22 @@ def user_input(user_question):
         , return_only_outputs=True)
 
     print(response)
-    st.write(response["output_text"])
+    #st.write(response["output_text"])
+    st.chat_message('user').write(user_question)
+    st.chat_message('ai').write(response["output_text"])
+
 
 
 # Main functio to tie it all up
 def main():  
     st.header("Chat with your PDF Document!")
     st.markdown("<h5 style='color: grey;'>Works with PDF files only</h1>", unsafe_allow_html=True)
-    with st.container():
-        pdf_docs = st.file_uploader("", accept_multiple_files=True)
+
+    with st.sidebar:
+        st.markdown("<h2 style='color: red;'>Instruction Menu</h1>", unsafe_allow_html=True)
+
+        st.markdown("<h4 style='color: grey;'>1. Upload your PDF Files using the 'Browse Files' button.</h4>", unsafe_allow_html=True)
+        pdf_docs = st.file_uploader("", type = "pdf", accept_multiple_files=True)
         
         if pdf_docs:
             file_name = pdf_docs[0].name
@@ -113,19 +124,15 @@ def main():
             else:
              st.error("Please upload a valid PDF file.")
 
-    with st.sidebar:
-        st.markdown("<h2 style='color: red;'>Instruction Menu</h1>", unsafe_allow_html=True)
-
-        st.markdown("<h4 style='color: grey;'>1. Upload your PDF Files using the 'Browse Files' button.</h4>", unsafe_allow_html=True)
         st.markdown("<h4 style='color: grey;'>2. Click on the Submit Button</h4>", unsafe_allow_html=True)
         st.markdown("<h4 style='color: grey;'>3. Ask a Question related to your document and get an answer.</h4>", unsafe_allow_html=True)
         st.markdown("<h4 style='color: grey;'>It's just that easy!</h4>", unsafe_allow_html=True)
 
-        st.markdown("<h2 style='color: red;'>Points to Note</h1>", unsafe_allow_html=True)
-        st.markdown("<h4 style='color: grey;'>1. It is recommended that you fact-check the answers provided by this model.</h4>", unsafe_allow_html=True)
-        st.markdown("<h4 style='color: grey;'>2. The information may sometimes be incomplete due to limited output size.</h4>", unsafe_allow_html=True)
+        # st.markdown("<h2 style='color: red;'>Points to Note</h1>", unsafe_allow_html=True)
+        # st.markdown("<h4 style='color: grey;'>1. It is recommended that you fact-check the answers provided by this model.</h4>", unsafe_allow_html=True)
+        # st.markdown("<h4 style='color: grey;'>2. The information may sometimes be incomplete due to limited output size.</h4>", unsafe_allow_html=True)
 
-    user_question = st.text_input("Ask a Question:")
+    user_question = st.chat_input("Ask a Question:")
 
     if user_question:
         user_input(user_question)
